@@ -4,38 +4,29 @@
 // add a check answer function
 // TODO event deligation
 var buttonsDiv = document.getElementById("button-go-here");
-
-buttonsDiv.addEventListener("click", function(e){
-    if(e.target.matches("button")){
-        console.log(e.target.getAttribute("id"));
-        if(e.target.getAttribute("correct") === "yes" ){
-            console.log("Yay you did it!")
-        }
-    }
-})
-
-// clickButton.addEventListener("click", function(event) {
-//     console.log(event);
-// });
+var answerChosen = 0;
+var realAnswer;
 
 
 var timeEl = document.querySelector(".time");
 var secondsLeft = 3;
 
-function setTime() {
-
-    var timerInterval = setInterval(function() {
-      secondsLeft--;
-      timeEl.textContent = secondsLeft + " seconds left till game over";
-  
-      if(secondsLeft === 0) {
-        clearInterval(timerInterval);
-        sendMessage();
+function checkWord(event){
+    var pressedKey = event.key;
+    console.log("any");
+    for (var i = 0; i < wordLength; i++) {
+      console.log(pressedKey);
+      console.log(i);
+      if (pressedKey == randomWord[i]) {
+        console.log(document.querySelector("#" + CSS.escape(i)));
+        document.querySelector("#" + CSS.escape(i)).textContent = pressedKey;
+        correctLetters++;
       }
-  
-    }, 1000);
+    }
+    if (correctLetters === wordLength) {
+      endGame();
+    }
   }
-
 
 const myQuestions = [
     { 
@@ -79,4 +70,23 @@ const myQuestions = [
     }
 ];
 
-setTime();
+function start() {
+    setTime();
+    myQuestions();
+}
+
+function setTime() {
+
+    var timerInterval = setInterval(function() {
+      secondsLeft--;
+      timeEl.textContent = secondsLeft + " seconds left till game over";
+  
+      if(secondsLeft === 0) {
+        clearInterval(timerInterval);
+        sendMessage();
+      }
+  
+    }, 1000);
+  }
+
+
