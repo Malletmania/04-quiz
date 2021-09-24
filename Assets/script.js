@@ -3,22 +3,33 @@
 // renderMessage();
 // add a check answer function
 // TODO event deligation
+var buttonsDiv = document.getElementById("button-go-here");
+
+buttonsDiv.addEventListener("click", function(e){
+    if(e.target.matches("button")){
+        console.log(e.target.getAttribute("id"));
+        if(e.target.getAttribute("correct") === "yes" ){
+            console.log("Yay you did it!")
+        }
+    }
+})
+
+// clickButton.addEventListener("click", function(event) {
+//     console.log(event);
+// });
 
 
 var timeEl = document.querySelector(".time");
-
 var secondsLeft = 3;
 
 function setTime() {
-    // Sets interval in variable
+
     var timerInterval = setInterval(function() {
       secondsLeft--;
       timeEl.textContent = secondsLeft + " seconds left till game over";
   
       if(secondsLeft === 0) {
-        // Stops execution of action at set interval
         clearInterval(timerInterval);
-        // Calls function to create and append image
         sendMessage();
       }
   
@@ -34,7 +45,8 @@ const myQuestions = [
         b: "get in loser we're going shopping",
         c: "It's not my fault you're, like, in love with me or something!",
         d: "You can't sit with us!"
-    }
+        },
+        correctAnswer: "b"
     }
     ,{
         question: "What color is an apple?",
