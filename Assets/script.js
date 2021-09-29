@@ -1,34 +1,12 @@
-// TODO make variables for one quiz question about apples and give options
-// localStorage.setItem("studentGrade", JSON.stringify(myQuestions));
-// renderMessage();
-// add a check answer function
-// TODO event deligation
-var buttonsDiv = document.getElementById("button-go-here");
-var answerChosen = 0;
-var realAnswer;
-
-
-var timeEl = document.querySelector(".time");
-var secondsLeft = 3;
-
-function checkWord(event){
-    var pressedKey = event.key;
-    console.log("any");
-    for (var i = 0; i < wordLength; i++) {
-      console.log(pressedKey);
-      console.log(i);
-      if (pressedKey == randomWord[i]) {
-        console.log(document.querySelector("#" + CSS.escape(i)));
-        document.querySelector("#" + CSS.escape(i)).textContent = pressedKey;
-        correctLetters++;
-      }
-    }
-    if (correctLetters === wordLength) {
-      endGame();
-    }
-  }
-
-const myQuestions = [
+//selectors
+var startGame = document.getElementById("start-game");
+var timerLocation = document.getElementById("timer");
+var scoreBoard = document.getElementById("score-board");
+var winsLocation = document.getElementById("wins-location");
+var lossesLocation = document.getElementById("losses-location")
+var secondsLeft = 10;
+//global variables
+var containerOfQuestions = [
     { 
         question: "what does Regina George say to Cady Heron when they want to go to the mall?",
         answers: {
@@ -70,10 +48,15 @@ const myQuestions = [
     }
 ];
 
-function start() {
+var wordIndex = 0;
+var currentQuestionArr = [];  
+var displayQuestionArr = [];
+
+//functions
+function begin(){
+    displayQuestion();
     setTime();
-    myQuestions();
-}
+};
 
 function setTime() {
 
@@ -87,6 +70,24 @@ function setTime() {
       }
   
     }, 1000);
-  }
+  };
 
 
+function checkQuestion(event){
+    var pressedKey = event.key;
+    for (var i = 0; i < containerOfQuestions; i++) {
+      if (pressedKey == randomWord[i]) {
+        console.log(document.querySelector("#" + CSS.escape(i)));
+        document.querySelector("#" + CSS.escape(i)).textContent = pressedKey;
+        correctLetters++;
+      }
+    }
+    if (correctLetters === wordLength) {
+      endGame();
+    }
+  };
+
+
+//event listener
+
+startGame.addEventListener("click", begin);
